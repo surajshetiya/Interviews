@@ -2,6 +2,11 @@ testcases = int(raw_input())
 lookup = [[]]
 text = ''
 
+"""
+DP solution that has a table of size n^2. Total time is n^3.
+"""
+
+
 def lookup_value(x, y, length):
     global lookup
     if(len(lookup[0]) != 0):
@@ -24,14 +29,12 @@ def solve(start, end):
                 lookup[start][start] = 0
             else:
                 lookup[start][start] = 1
-            #print("Lookup " + str(start) + " to " + str(end) + " " + str(lookup[start][start]))
             return lookup[start][start]
 
         # Add a character * to the end and run combinations of 0 to x and x+1 to n
         for mid in range(start, end):
             value = solve( start, mid ) + solve( mid+1, end ) + 1
             if( value < minimum ):
-                #print("Lookup add a * split at " + str(mid) + " for "  + str(start) + " to " + str(end) + " " + str(value))
                 minimum = value
 
         # Change a character at right end  to * if it is x
@@ -45,7 +48,6 @@ def solve(start, end):
             else:
                 value = solve(start, mid - 1) + 1 # Add an 'x' char
             if(value + basic < minimum):
-                #print("Lookup change the last char split at " + str(mid) + " for " + str(start) + " to " + str(end) + " with basic as " + str(basic) + " "+ str(value + basic))
                 minimum = value + basic
 
         # Check combinations of deletions and size from right and left
